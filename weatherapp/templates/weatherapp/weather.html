@@ -6,7 +6,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Weather</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.css" />
 </head>
 
@@ -24,6 +25,17 @@
         <div class="container">
             <div class="columns">
                 <div class="column is-offset-4 is-4">
+                {% if messages %} {% for message in messages %}
+                    {% if message.tags == "warning"%}
+                        <div class="notification is-warning">
+						{{ message }}
+					    </div>
+                    {% else %}
+					<div class="notification is-danger">
+						{{ message }}
+					</div>
+                    {% endif %}
+					{% endfor %} {% endif %}
                     <form method="POST">
                         {% csrf_token %}
                         <div class="field has-addons">
@@ -63,6 +75,11 @@
                                     </p>
                                 </div>
                             </div>
+                                <div class="media-right">
+                                    <a href="{% url 'delete_city' city_weather.city %}">
+                                        <button class="delete"></button>
+                                    </a>
+                                </div>
                         </article>
                     </div>
                 {% endfor %}
